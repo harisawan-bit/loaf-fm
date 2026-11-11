@@ -21,6 +21,7 @@ ColumnLayout {
     }
 
     readonly property bool matchOpenDirs: matches("open folders directories navigation split view new tab current view")
+    readonly property bool matchClickToOpen: matches("click to open single click double click behavior folder file")
     readonly property bool matchDrag: matches("left click drag action selection box pan scroll view rubberband marquee mouse")
     readonly property bool matchHidden: matches("show hidden files dot dotfiles folders")
     readonly property bool matchDisambig: matches("disambiguate duplicate names parent folder prefix search")
@@ -29,7 +30,7 @@ ColumnLayout {
     readonly property bool matchSession: matches("session restore tabs remember last folder window startup launch")
 
     readonly property int matchCount: (searchQuery && searchQuery.trim().length > 0)
-        ? ((matchOpenDirs ? 1 : 0) + (matchDrag ? 1 : 0) + (matchHidden ? 1 : 0)
+        ? ((matchOpenDirs ? 1 : 0) + (matchClickToOpen ? 1 : 0) + (matchDrag ? 1 : 0) + (matchHidden ? 1 : 0)
             + (matchDisambig ? 1 : 0) + (matchRename ? 1 : 0) + (matchSearch ? 1 : 0) + (matchSession ? 1 : 0))
         : 0
 
@@ -61,7 +62,26 @@ ColumnLayout {
             }
         }
 
-        SettingDivider { visible: root.matchOpenDirs && (root.matchDrag || root.matchHidden || root.matchDisambig) }
+        SettingDivider { visible: root.matchOpenDirs && root.matchClickToOpen }
+
+        SettingRow {
+            visible: root.matchClickToOpen
+            icon: "cursor-click"
+            title: qsTr("Click to open")
+            subtitle: qsTr("Choose whether a single click or a double click opens files and folders")
+
+            LoafSegmented {
+                Layout.preferredWidth: (typeof settingsView !== "undefined" && settingsView.isCompact) ? 140 : 260
+                options: [
+                    { value: "double", label: qsTr("Double-click"), shortLabel: qsTr("Double") },
+                    { value: "single", label: qsTr("Single-click"), shortLabel: qsTr("Single") }
+                ]
+                value: theme.clickToOpen
+                onSelected: function(v) { theme.clickToOpen = v; }
+            }
+        }
+
+        SettingDivider { visible: (root.matchOpenDirs || root.matchClickToOpen) && (root.matchDrag || root.matchHidden || root.matchDisambig) }
 
         SettingRow {
             visible: root.matchDrag
