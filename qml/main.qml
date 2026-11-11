@@ -1954,6 +1954,7 @@ ApplicationWindow {
                                     color: tabDelegate.current ? theme.secondaryContainerFg : theme.textMain
                                     font.pixelSize: theme.fs(12)
                                     font.bold: tabDelegate.current && (!tabDelegate.isSplit || window.activePane === pane0)
+                                    font.weight: theme.fw(tabDelegate.current && (!tabDelegate.isSplit || window.activePane === pane0))
                                     font.family: theme.fontFamily
                                     elide: Text.ElideRight
                                 }
@@ -1977,6 +1978,7 @@ ApplicationWindow {
                                     color: tabDelegate.current ? theme.secondaryContainerFg : theme.textMain
                                     font.pixelSize: theme.fs(12)
                                     font.bold: tabDelegate.current && tabDelegate.isSplit && pane1Loader.item && window.activePane === pane1Loader.item
+                                    font.weight: theme.fw(tabDelegate.current && tabDelegate.isSplit && pane1Loader.item && window.activePane === pane1Loader.item)
                                     font.family: theme.fontFamily
                                     elide: Text.ElideRight
                                 }
