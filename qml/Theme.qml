@@ -62,6 +62,7 @@ Item {
     property bool showNewWindowButton: true
     property string pathBarMode: "chips" // "chips", "text"
     property string openFolderMode: "current" // "current", "split", "tab"
+    property string clickToOpen: "double" // "double", "single"
     property bool showBackgroundShapes: true
 
     // Low-power mode activates automatically when running on software rendering or low-end hardware.
@@ -132,6 +133,7 @@ Item {
             return openDyslexicFont.status === FontLoader.Ready ? openDyslexicFont.name : "OpenDyslexic";
         return "";
     }
+    readonly property string fontFamily: defaultFontFamily
 
     property bool highContrast: false
 
@@ -2185,6 +2187,8 @@ Item {
         if (value.length > 0) pathBarMode = value;
         value = readSetting("openFolderMode");
         if (value.length > 0) openFolderMode = value;
+        value = readSetting("clickToOpen");
+        if (value.length > 0) clickToOpen = value;
         value = readSetting("showBackgroundShapes");
         if (value.length > 0) showBackgroundShapes = (value !== "false");
         value = readSetting("fontChoice");
@@ -2243,6 +2247,7 @@ Item {
     onShowNewWindowButtonChanged: writeSetting("showNewWindowButton", showNewWindowButton ? "true" : "false")
     onPathBarModeChanged: writeSetting("pathBarMode", pathBarMode)
     onOpenFolderModeChanged: writeSetting("openFolderMode", openFolderMode)
+    onClickToOpenChanged: writeSetting("clickToOpen", clickToOpen)
     onShowBackgroundShapesChanged: writeSetting("showBackgroundShapes", showBackgroundShapes ? "true" : "false")
     onFontChoiceChanged: writeSetting("fontChoice", fontChoice)
     onDefaultFontFamilyChanged: if (typeof nativeBridge !== "undefined" && nativeBridge) nativeBridge.setApplicationFont(defaultFontFamily)
